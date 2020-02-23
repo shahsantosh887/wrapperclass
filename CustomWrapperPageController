@@ -1,0 +1,94 @@
+public class CustomWrapperPageController 
+{
+   Public List<CustomWrapper> lstWrapper {get;set;}
+   
+   
+   public void SelectAllRecords()
+     {
+     
+        if(!lstWrapper.isEmpty())
+          {
+             for(CustomWrapper wr:lstWrapper )
+             {
+               wr.isSelected=true;
+             }
+          }
+     
+     }
+     
+     
+     public void DeSelectAllRecords()
+     {
+     
+        if(!lstWrapper.isEmpty())
+          {
+             for(CustomWrapper wr:lstWrapper )
+             {
+               wr.isSelected=false;
+             }
+          }
+     
+     }
+
+     public void DeleteSelectedRecords()
+   
+       {
+          list<id> recordIDtoRemove = new list<id>();
+        
+          if(!lstWrapper.isEmpty())
+          
+            {
+                for(CustomWrapper wr:lstWrapper )
+                
+                  {
+                     if(!wr.isSelected==true)
+                      {
+                         recordIDtoRemove.add(wr.RecordID);
+                      
+                      }
+                  
+                  }
+                  
+                  if(!recordIDtoRemove.isEmpty())
+                    {
+                      database.delete(recordIDtoRemove);
+                    }
+            
+            }
+         
+       }
+
+
+
+
+   public void LoadSObjectsData()
+     {
+       lstWrapper =New List<CustomWrapper>();
+       list<Contact> lstContacts = [select id,firstname,lastname,email,phone,fax from contact limit 10]; 
+       list<Lead> lstLeads = [select id,firstname,lastname,email,phone,fax from lead limit 10];   
+       
+         if(!lstContacts.isEmpty())
+         {
+            for(contact con : lstContacts)
+            
+              {
+                lstWrapper.Add(new CustomWrapper(con,false));
+              }
+                       
+        }
+        
+        
+         if(!lstLeads.isEmpty())
+         {
+            for(Lead ld: lstLeads)
+            
+              {
+                lstWrapper.Add(new CustomWrapper(ld,false));
+              }
+                       
+        }
+       
+     }
+
+
+}
